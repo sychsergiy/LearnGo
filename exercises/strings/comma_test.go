@@ -20,3 +20,8 @@ func Test_commaLoop(t *testing.T) {
 	result3 := commaLoop("10")
 	assert.Equal(t, "10", result3)
 }
+
+func Test_commaFloatNumber(t *testing.T) {
+	result := commaLoop("1000.0001")
+	assert.Equal(t, "1,000.000,1", result)
+}

@@ -1,6 +1,8 @@
 package strings
 
-import "strings"
+import (
+	"strings"
+)
 
 func commaRecursive(s string) string {
 	n := len(s)
@@ -24,4 +26,16 @@ func commaLoop(s string) string {
 	}
 
 	return strings.Join(chunks, ",")
+}
+
+func commaFloatNumber(s string) string {
+	chunks := strings.Split(s, ",")
+	if len(chunks) > 2 {
+		panic("Wrong input")
+	}
+	intPart, floatPart := chunks[0], chunks[1]
+
+	intPartWithCommas := commaLoop(intPart)
+	floatPartWithCommas := commaLoop(floatPart)
+	return intPartWithCommas + "." + floatPartWithCommas
 }
