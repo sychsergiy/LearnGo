@@ -52,3 +52,9 @@ func Test_rotateByPopPush(t *testing.T) {
 	rotateByPopPush(&input2, 5)
 	assert.True(t, reflect.DeepEqual([]int{6, 7, 1, 2, 3, 4, 5}, input2))
 }
+
+func Test_removeAdjacentDuplicates(t *testing.T) {
+	input := []string{"test", "test", "test2", "test", "test3"}
+	result := removeAdjacentDuplicates(input)
+	assert.Equal(t, []string{"test", "test2", "test", "test3"}, result)
+}

@@ -39,7 +39,19 @@ func preppend(sPtr *[] int, s2 []int) {
 	*sPtr = append(s2, s...)
 }
 
-func rotateByPopPush(s* []int, n int) {
+func rotateByPopPush(s *[]int, n int) {
 	popped := pop(s, n)
 	preppend(s, popped)
+}
+
+func removeAdjacentDuplicates(strings []string) []string {
+	w := 0 // index of last written string
+	for _, s := range strings {
+		if strings[w] == s {
+			continue
+		}
+		w++
+		strings[w] = s
+	}
+	return strings[:w+1]
 }
