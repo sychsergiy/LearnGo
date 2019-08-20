@@ -38,3 +38,17 @@ func Test_rotateByCopy(t *testing.T) {
 	rotateByCopy(input2, 5)
 	assert.True(t, reflect.DeepEqual([]int{6, 7, 1, 2, 3, 4, 5}, input2))
 }
+
+func Test_rotateByPopPush(t *testing.T) {
+	input := []int{1, 2, 3, 4}
+	rotateByPopPush(&input, 2)
+	assert.True(t, reflect.DeepEqual([]int{3, 4, 1, 2}, input))
+
+	input3 := []int{1, 2, 3, 4, 5, 6, 7}
+	rotateByPopPush(&input3, 2)
+	assert.True(t, reflect.DeepEqual([]int{3, 4, 5, 6, 7, 1, 2}, input3))
+
+	input2 := []int{1, 2, 3, 4, 5, 6, 7}
+	rotateByPopPush(&input2, 5)
+	assert.True(t, reflect.DeepEqual([]int{6, 7, 1, 2, 3, 4, 5}, input2))
+}

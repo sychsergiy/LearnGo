@@ -27,6 +27,19 @@ func rotateByCopy(s []int, n int) {
 	copy(s[len(s)-n:], sCopy, ) // copy before n from another slice to the end of current
 }
 
-func rotate3(s []int, n int) {
-	// use pop and push
+func pop(sPtr *[] int, n int) []int {
+	s := *sPtr
+	result := s[n:]
+	*sPtr = s[:n]
+	return result
+}
+
+func preppend(sPtr *[] int, s2 []int) {
+	s := *sPtr
+	*sPtr = append(s2, s...)
+}
+
+func rotateByPopPush(s* []int, n int) {
+	popped := pop(s, n)
+	preppend(s, popped)
 }
