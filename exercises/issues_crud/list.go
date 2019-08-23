@@ -40,7 +40,7 @@ type issue struct {
 	UpdatedAt time.Time
 }
 
-func ListIssues(creds AuthCredentials) (*[]issue, error) {
+func ListIssues(creds BasicAuthCreds) (*[]issue, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", restAPIURL+"/issues", nil)
 	if err != nil {

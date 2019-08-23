@@ -1,5 +1,5 @@
 package main
 
-type AuthCredentials struct {
+type BasicAuthCreds struct {
 	username, password string
 }
