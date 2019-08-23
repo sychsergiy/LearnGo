@@ -4,17 +4,18 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"overview/exercises/issues_crud/github"
 )
 
-func getBasicAuthCredsFromEnv() BasicAuthCreds {
+func getBasicAuthCredsFromEnv() github.BasicAuthCreds {
 	username := os.Getenv("GIT_HUB_USERNAME")
 	password := os.Getenv("GIT_HUB_PASSWORD")
-	return BasicAuthCreds{username, password}
+	return github.BasicAuthCreds{Username: username, Password: password}
 }
 
 func main() {
 	creds := getBasicAuthCredsFromEnv()
-	githubClient := GitHubClient{creds}
+	githubClient := github.Client{AuthCreds: creds}
 
 	issues, err := githubClient.ListIssues()
 
