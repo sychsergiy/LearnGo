@@ -14,10 +14,12 @@ func getBasicAuthCredsFromEnv() BasicAuthCreds {
 
 func main() {
 	creds := getBasicAuthCredsFromEnv()
-	issues, err := ListIssues(creds)
+	githubClient := GitHubClient{creds}
+
+	issues, err := githubClient.ListIssues()
 
 	if issues != nil {
-		for _, issue := range *issues {
+		for _, issue := range issues {
 			json, _ := json.MarshalIndent(issue, "", "\t")
 			log.Println(string(json))
 		}
