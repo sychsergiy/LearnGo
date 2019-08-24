@@ -39,7 +39,7 @@ type Issue struct {
 }
 
 func (c *Client) ListIssues() ([]Issue, error) {
-	resp, err := c.sendRequest(GET, "/issues", c.AuthCreds)
+	resp, err := c.sendRequest(GET, "issues", c.AuthCreds, nil)
 	if err != nil {
 		return nil, err
 	}

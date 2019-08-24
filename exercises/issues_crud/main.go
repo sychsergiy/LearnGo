@@ -13,20 +13,29 @@ func getBasicAuthCredsFromEnv() github.BasicAuthCreds {
 	return github.BasicAuthCreds{Username: username, Password: password}
 }
 
-func main() {
-	creds := getBasicAuthCredsFromEnv()
-	githubClient := github.Client{AuthCreds: creds}
-
+func listIssues(githubClient github.Client) {
 	issues, err := githubClient.ListIssues()
 
 	if issues != nil {
 		for _, issue := range issues {
-			json, _ := json.MarshalIndent(issue, "", "\t")
-			log.Println(string(json))
+			marshaled, _ := json.MarshalIndent(issue, "", "\t")
+			log.Println(string(marshaled))
 		}
 	}
 	if err != nil {
 		log.Fatal(err)
 	}
+}
 
+func deleteIssue(githubClient github.Client) {
+	err := githubClient.LockIssue("LearnGo", 1, "any reason")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func main() {
+	creds := getBasicAuthCredsFromEnv()
+	githubClient := github.Client{AuthCreds: creds}
+	deleteIssue(githubClient)
 }
