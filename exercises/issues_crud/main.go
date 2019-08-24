@@ -53,10 +53,23 @@ func createIssue(githubClient github.Client) {
 	}
 }
 
+func editIssue(githubClient github.Client) {
+	data := github.EditIssueRequestData{Title: "New title", Body: "edited Body", State: "closed"}
+	issue, err := githubClient.EditIssue("LearnGo", 3, data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if issue != nil {
+		marshaled, _ := json.MarshalIndent(issue, "", "\t")
+		log.Println(string(marshaled))
+	}
+}
+
 func main() {
 	creds := getBasicAuthCredsFromEnv()
 	githubClient := github.Client{AuthCreds: creds}
 	//lockIssue(githubClient)
 	//unlockIssue(githubClient)
-	createIssue(githubClient)
+	//createIssue(githubClient)
+	editIssue(githubClient)
 }

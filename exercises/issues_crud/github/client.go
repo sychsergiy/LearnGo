@@ -16,6 +16,7 @@ const (
 	POST   = "POST"
 	PUT    = "PUT"
 	DELETE = "DELETE"
+	PATH   = "PATCH"
 )
 
 func (c *Client) buildRequest(method, url string, creds BasicAuthCreds, body []byte) (*http.Request, error) {
