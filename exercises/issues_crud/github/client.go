@@ -12,13 +12,13 @@ type Client struct {
 const RestApiUrl = "https://api.github.com/"
 
 const (
-	GET  = "GET"
-	POST = "POST"
-	PUT  = "PUT"
+	GET    = "GET"
+	POST   = "POST"
+	PUT    = "PUT"
+	DELETE = "DELETE"
 )
 
 func (c *Client) buildRequest(method, url string, creds BasicAuthCreds, body []byte) (*http.Request, error) {
-	// todo: add body
 	req, err := http.NewRequest(method, RestApiUrl+url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err

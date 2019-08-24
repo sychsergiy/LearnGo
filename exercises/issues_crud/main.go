@@ -27,8 +27,15 @@ func listIssues(githubClient github.Client) {
 	}
 }
 
-func deleteIssue(githubClient github.Client) {
+func lockIssue(githubClient github.Client) {
 	err := githubClient.LockIssue("LearnGo", 1, "any reason")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func unlockIssue(githubClient github.Client) {
+	err := githubClient.UnlockIssue("LearnGo", 1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,5 +44,6 @@ func deleteIssue(githubClient github.Client) {
 func main() {
 	creds := getBasicAuthCredsFromEnv()
 	githubClient := github.Client{AuthCreds: creds}
-	deleteIssue(githubClient)
+	lockIssue(githubClient)
+	unlockIssue(githubClient)
 }
