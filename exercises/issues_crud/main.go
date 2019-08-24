@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"overview/exercises/issues_crud/cli"
 	"overview/exercises/issues_crud/github"
 )
 
@@ -66,10 +67,19 @@ func editIssue(githubClient github.Client) {
 }
 
 func main() {
-	creds := getBasicAuthCredsFromEnv()
-	githubClient := github.Client{AuthCreds: creds}
-	//lockIssue(githubClient)
-	//unlockIssue(githubClient)
-	//createIssue(githubClient)
-	editIssue(githubClient)
+	LIST := "list"
+	client := github.Client{AuthCreds: getBasicAuthCredsFromEnv()}
+	CLI := cli.New()
+	CLI.RegisterHandler(LIST, ListIssues{GithubClient: client})
+
+	CLI.Run()
 }
+
+//func main() {
+//	creds := getBasicAuthCredsFromEnv()
+//	githubClient := github.Client{AuthCreds: creds}
+//lockIssue(githubClient)
+//unlockIssue(githubClient)
+//createIssue(githubClient)
+//editIssue(githubClient)
+//}
