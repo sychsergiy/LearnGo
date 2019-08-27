@@ -3,7 +3,9 @@ package commands
 import (
 	"encoding/json"
 	"log"
+	"overview/exercises/issues_crud/cli"
 	"overview/exercises/issues_crud/github"
+	"strconv"
 )
 
 type EditIssues struct {
@@ -11,8 +13,14 @@ type EditIssues struct {
 }
 
 func (handler *EditIssues) Execute() {
-	data := github.EditIssueRequestData{Title: "New title", Body: "edited Body", State: "closed"}
-	issue, err := handler.GithubClient.EditIssue("LearnGo", 3, data)
+	args := cli.RetrieveArgs(5)
+	repo, title, body, state := args[0], args[2], args[3], args[4]
+	issueNumber, convErr := strconv.Atoi(args[1])
+	if convErr != nil {
+		log.Fatal(convErr)
+	}
+	data := github.EditIssueRequestData{Title: title, Body: body, State: state}
+	issue, err := handler.GithubClient.EditIssue(repo, issueNumber, data)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -9,12 +9,11 @@ import (
 )
 
 type LockIssue struct {
-	BaseCommand  cli.BaseCommand
 	GithubClient github.Client
 }
 
 func (handler *LockIssue) Execute() {
-	args := handler.BaseCommand.RetrieveArgs(3)
+	args := cli.RetrieveArgs(3)
 	issueNumber, err := strconv.Atoi(args[1])
 	if err != nil {
 		log.Fatal(err)

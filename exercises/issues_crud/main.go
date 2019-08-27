@@ -23,10 +23,10 @@ func getBasicAuthCredsFromEnv() github.BasicAuthCreds {
 func main() {
 	client := github.Client{AuthCreds: getBasicAuthCredsFromEnv()}
 	CLI := cli.New()
-	//CLI.RegisterCommand(LIST, &commands.ListIssues{GithubClient: client})
-	//CLI.RegisterCommand(EDIT, &commands.EditIssues{GithubClient: client})
-	//CLI.RegisterCommand(CREATE, &commands.CreateIssue{GithubClient: client})
+	CLI.RegisterCommand(LIST, &commands.ListIssues{GithubClient: client})
+	CLI.RegisterCommand(EDIT, &commands.EditIssues{GithubClient: client})
+	CLI.RegisterCommand(CREATE, &commands.CreateIssue{GithubClient: client})
 	CLI.RegisterCommand(LOCK, &commands.LockIssue{GithubClient: client})
-	//CLI.RegisterCommand(UNLOCK, &commands.UnlockIssue{GithubClient: client})
+	CLI.RegisterCommand(UNLOCK, &commands.UnlockIssue{GithubClient: client})
 	CLI.Run()
 }

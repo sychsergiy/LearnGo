@@ -2,7 +2,9 @@ package commands
 
 import (
 	"log"
+	"overview/exercises/issues_crud/cli"
 	"overview/exercises/issues_crud/github"
+	"strconv"
 )
 
 type UnlockIssue struct {
@@ -10,7 +12,13 @@ type UnlockIssue struct {
 }
 
 func (handler *UnlockIssue) Execute() {
-	err := handler.GithubClient.UnlockIssue("LearnGo", 1)
+	args := cli.RetrieveArgs(2)
+	repo := args[0]
+	issueNumber, convErr := strconv.Atoi(args[1])
+	if convErr != nil {
+		log.Fatal(convErr)
+	}
+	err := handler.GithubClient.UnlockIssue(repo, issueNumber)
 	if err != nil {
 		log.Fatal(err)
 	}

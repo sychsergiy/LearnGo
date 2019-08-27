@@ -9,11 +9,8 @@ type Command interface {
 	Execute()
 }
 
-type BaseCommand struct {
-}
-
-func (command *BaseCommand) RetrieveArgs(argsLen int) []string {
-	if len(os.Args) < argsLen {
+func RetrieveArgs(argsLen int) []string {
+	if len(os.Args) < argsLen+2 {
 		log.Fatal("Not enough arguments")
 	}
 	args := make([]string, 0, argsLen)

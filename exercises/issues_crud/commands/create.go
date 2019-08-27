@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"log"
+	"overview/exercises/issues_crud/cli"
 	"overview/exercises/issues_crud/github"
 )
 
@@ -11,8 +12,10 @@ type CreateIssue struct {
 }
 
 func (handler *CreateIssue) Execute() {
-	data := github.CreateIssueRequestData{Title: "Test title", Body: "Test Body"}
-	issue, err := handler.GithubClient.CreateIssue("LearnGo", data)
+	args := cli.RetrieveArgs(3)
+	repo, title, body := args[0], args[1], args[2]
+	data := github.CreateIssueRequestData{Title: title, Body: body}
+	issue, err := handler.GithubClient.CreateIssue(repo, data)
 	if err != nil {
 		log.Fatal(err)
 	}
