@@ -1,5 +1,5 @@
 package cli
 
-type Handler interface {
+type Command interface {
 	Execute()
 }

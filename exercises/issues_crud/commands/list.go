@@ -1,4 +1,4 @@
-package main
+package commands
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ type ListIssues struct {
 	GithubClient github.Client
 }
 
-func (handler ListIssues) Execute() {
+func (handler *ListIssues) Execute() {
 	issues, err := handler.GithubClient.ListIssues()
 	if err != nil {
 		log.Fatal(err)

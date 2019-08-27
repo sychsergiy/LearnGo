@@ -6,21 +6,21 @@ import (
 )
 
 type cli struct {
-	handlers map[string]Handler
+	commands map[string]Command
 }
 
 func New() *cli {
 	instance := cli{}
-	instance.handlers = make(map[string]Handler)
+	instance.commands = make(map[string]Command)
 	return &instance
 }
 
-func (c *cli) RegisterHandler(key string, handler Handler) {
-	c.handlers[key] = handler
+func (c *cli) RegisterCommand(key string, handler Command) {
+	c.commands[key] = handler
 }
 
 func (c *cli) handle(key string) {
-	if actionHandler, ok := c.handlers[key]; ok {
+	if actionHandler, ok := c.commands[key]; ok {
 		actionHandler.Execute()
 	} else {
 		log.Fatal("No registered handler on action: " + key, )
