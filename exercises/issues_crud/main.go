@@ -1,10 +1,10 @@
 package main
 
 import (
+	"issues_crud/cli"
+	"issues_crud/commands"
+	"issues_crud/github"
 	"os"
-	"overview/exercises/issues_crud/cli"
-	"overview/exercises/issues_crud/commands"
-	"overview/exercises/issues_crud/github"
 )
 
 const (

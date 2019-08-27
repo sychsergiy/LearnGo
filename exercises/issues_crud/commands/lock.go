@@ -1,10 +1,10 @@
 package commands
 
 import (
+	"issues_crud/cli"
+	"issues_crud/github"
 	"log"
 	"os"
-	"overview/exercises/issues_crud/cli"
-	"overview/exercises/issues_crud/github"
 	"strconv"
 )
 

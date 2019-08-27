@@ -2,8 +2,8 @@ package commands
 
 import (
 	"encoding/json"
+	"issues_crud/github"
 	"log"
-	"overview/exercises/issues_crud/github"
 )
 
 type ListIssues struct {

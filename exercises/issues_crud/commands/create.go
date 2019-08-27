@@ -2,9 +2,9 @@ package commands
 
 import (
 	"encoding/json"
+	"issues_crud/cli"
+	"issues_crud/github"
 	"log"
-	"overview/exercises/issues_crud/cli"
-	"overview/exercises/issues_crud/github"
 )
 
 type CreateIssue struct {
