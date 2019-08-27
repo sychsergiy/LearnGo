@@ -13,8 +13,9 @@ type EditIssues struct {
 }
 
 func (handler *EditIssues) Execute() {
-	args := cli.RetrieveArgs(5)
-	repo, title, body, state := args[0], args[2], args[3], args[4]
+	args := cli.RetrieveArgs(4)
+	repo, title, state := args[0], args[2], args[3]
+	body := cli.RetrieveArgFromEditor()
 	issueNumber, convErr := strconv.Atoi(args[1])
 	if convErr != nil {
 		log.Fatal(convErr)

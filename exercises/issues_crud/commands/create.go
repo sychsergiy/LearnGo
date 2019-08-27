@@ -12,8 +12,9 @@ type CreateIssue struct {
 }
 
 func (handler *CreateIssue) Execute() {
-	args := cli.RetrieveArgs(3)
-	repo, title, body := args[0], args[1], args[2]
+	args := cli.RetrieveArgs(2)
+	repo, title := args[0], args[1]
+	body := cli.RetrieveArgFromEditor()
 	data := github.CreateIssueRequestData{Title: title, Body: body}
 	issue, err := handler.GithubClient.CreateIssue(repo, data)
 	if err != nil {
