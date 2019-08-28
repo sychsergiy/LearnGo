@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	comic := client.FetchOne(1)
+	comic := client.FetchLast()
 	marshalledComic, err := json.Marshal(comic)
 	if err != nil {
 		log.Fatal(err)
