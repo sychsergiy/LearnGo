@@ -5,8 +5,9 @@ import (
 )
 
 type Index interface {
-	Create()
-	Drop()
-	AddComic(comic comic.Comic)
+	Create() error
+	Drop() error
+	AddComic(comic comic.Comic) error
 	BulkAddComic(comics []comic.Comic)
+	RemoveComic()
 }

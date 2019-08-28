@@ -1,17 +1,15 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
 	"xkcd/client"
+	"xkcd/index/JSON"
 )
 
 func main() {
 	comic := client.FetchLast()
-	marshalledComic, err := json.Marshal(comic)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(string(marshalledComic))
+
+	index := JSON.Index{}
+	_ = index.Create()
+	_ = index.AddComic(comic)
+	_ = index.Drop()
 }

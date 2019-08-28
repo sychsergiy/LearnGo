@@ -30,7 +30,7 @@ func FetchLast() *comic.Comic {
 }
 
 func FetchOne(number int) *comic.Comic {
-	url := fmt.Sprintf("https://xkcd.com/%d/info.0.json", number)
+	url := fmt.Sprintf("https://xkcd.com/%d/info.0.JSON", number)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
