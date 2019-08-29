@@ -49,3 +49,7 @@ func (index *Index) AddComic(comic *comic.Comic) error {
 func (index *Index) BulkAddComic(comic []comic.Comic) {
 
 }
+
+func (index *Index) RemoveComic(num int) error {
+	panic("not implemented")
+}

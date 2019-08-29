@@ -1,15 +1,13 @@
 package main
 
 import (
-	"xkcd/client"
+	"xkcd/index"
 	"xkcd/index/JSON"
 )
 
 func main() {
-	comic := client.FetchLast()
-
-	index := JSON.Index{}
-	_ = index.Create()
-	_ = index.AddComic(comic)
-	_ = index.Drop()
+	jsonIndex := &JSON.Index{}
+	_ = jsonIndex.Create()
+	index.Fill(jsonIndex)
+	jsonIndex.Drop()
 }
