@@ -8,13 +8,18 @@ import (
 	"xkcd/comic"
 )
 
-const indexDirPath = "json_index"
+const indexDirPrefix = "json_index"
 
 type Index struct {
+	Name string
+}
+
+func (index *Index) getDirName() string {
+	return indexDirPrefix + "_" + index.Name
 }
 
 func (index *Index) Create() error {
-	err := os.Mkdir(indexDirPath, 0700)
+	err := os.Mkdir(index.getDirName(), 0700)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -23,7 +28,7 @@ func (index *Index) Create() error {
 }
 
 func (index *Index) Drop() error {
-	err := os.RemoveAll(indexDirPath)
+	err := os.RemoveAll(index.getDirName())
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -33,7 +38,7 @@ func (index *Index) Drop() error {
 
 func (index *Index) AddComic(comic *comic.Comic) error {
 	filename := fmt.Sprintf("%d.json", comic.Num)
-	f, err := os.Create(path.Join(indexDirPath, filename))
+	f, err := os.Create(path.Join(index.getDirName(), filename))
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -46,10 +51,13 @@ func (index *Index) AddComic(comic *comic.Comic) error {
 	return nil
 }
 
-func (index *Index) BulkAddComic(comic []comic.Comic) {
-
-}
-
-func (index *Index) RemoveComic(num int) error {
-	panic("not implemented")
+func (index *Index) BulkAddComic(comics []comic.Comic) int {
+	var failed int
+	for _, c := range comics {
+		err := index.AddComic(&c)
+		if err != nil {
+			failed += 1
+		}
+	}
+	return failed
 }

@@ -1,13 +1,17 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"xkcd/index"
 	"xkcd/index/JSON"
 )
 
 func main() {
-	jsonIndex := &JSON.Index{}
+	jsonIndex := &JSON.Index{Name: "test"}
+	_ = jsonIndex.Drop()
 	_ = jsonIndex.Create()
-	index.Fill(jsonIndex)
-	jsonIndex.Drop()
+	failed := index.BulkFill(jsonIndex, 100)
+	log.Println(fmt.Sprintf("Finish filling index, failed items: %d", failed))
+	//_ = jsonIndex.Drop()
 }
