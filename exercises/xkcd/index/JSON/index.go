@@ -80,7 +80,7 @@ func (index *Index) RetrieveComic(num int) *comic.Comic {
 
 }
 
-func (index *Index) BulkRetrieveComics(nums []int) []comic.Comic {
+func (index *Index) BulkRetrieveComic(nums []int) []comic.Comic {
 	comics := make([]comic.Comic, 0, len(nums))
 	for _, num := range nums {
 		comics = append(comics, *index.RetrieveComic(num))

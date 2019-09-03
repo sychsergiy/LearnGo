@@ -47,12 +47,13 @@ type ComicIndexItem struct {
 }
 
 func CreateComicIndexItem(comic comic.Comic) *ComicIndexItem {
+	//todo: remove empty strings
 	excluded := []string{"a", "the", "an"}
 	titleKeyWords := getKeyWords(comic.Title, excluded)
 	transcriptKeyWords := getKeyWords(comic.Transcript, excluded)
 	sort.Strings(titleKeyWords)
 	sort.Strings(transcriptKeyWords)
-	return &ComicIndexItem{TitleKeyWords: titleKeyWords, TranscriptKeyWords: titleKeyWords, Num: comic.Num}
+	return &ComicIndexItem{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: comic.Num}
 }
 
 func ReadComicIndex() []ComicIndexItem {
