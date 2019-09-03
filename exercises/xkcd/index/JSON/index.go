@@ -1,7 +1,9 @@
 package JSON
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -60,4 +62,28 @@ func (index *Index) BulkAddComic(comics []comic.Comic) int {
 		}
 	}
 	return failed
+}
+
+func (index *Index) RetrieveComic(num int) *comic.Comic {
+	filename := fmt.Sprintf("%d.json", num)
+	file, err := os.OpenFile(path.Join(index.getDirName(), filename), os.O_RDONLY, 0660)
+	if err != nil {
+		log.Fatal(err)
+	}
+	content, err := ioutil.ReadAll(file)
+	c := &comic.Comic{}
+	err = json.Unmarshal(content, c)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return c
+
+}
+
+func (index *Index) BulkRetrieveComics(nums []int) []comic.Comic {
+	comics := make([]comic.Comic, 0, len(nums))
+	for _, num := range nums {
+		comics = append(comics, *index.RetrieveComic(num))
+	}
+	return comics
 }

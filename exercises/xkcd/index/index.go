@@ -13,6 +13,8 @@ type Index interface {
 	Drop() error
 	AddComic(comic *comic.Comic) error
 	BulkAddComic(comics []comic.Comic) int
+	RetrieveComic(num int) *comic.Comic
+	BulkRetrieveComic(nums []int) []comic.Comic
 }
 
 func Fill(index Index) {
