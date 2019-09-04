@@ -1,4 +1,4 @@
-package search
+package index_item
 
 import (
 	"log"
@@ -37,18 +37,18 @@ func getKeyWords(text string, wordsToExclude []string) []string {
 	return filteredWords
 }
 
-func CreateComicIndexItem(comic comic.Comic) *ComicIndexItem {
-	//todo: remove empty strings
-	excluded := []string{"a", "the", "an"}
-	titleKeyWords := getKeyWords(comic.Title, excluded)
-	transcriptKeyWords := getKeyWords(comic.Transcript, excluded)
-	sort.Strings(titleKeyWords)
-	sort.Strings(transcriptKeyWords)
-	return &ComicIndexItem{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: comic.Num}
-}
-
-type ComicIndexItem struct {
+type Comic struct {
 	TitleKeyWords      []string
 	TranscriptKeyWords []string
 	Num                int
+}
+
+func CreateComic(c comic.Comic) *Comic {
+	//todo: remove empty strings
+	excluded := []string{"a", "the", "an"}
+	titleKeyWords := getKeyWords(c.Title, excluded)
+	transcriptKeyWords := getKeyWords(c.Transcript, excluded)
+	sort.Strings(titleKeyWords)
+	sort.Strings(transcriptKeyWords)
+	return &Comic{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: c.Num}
 }
