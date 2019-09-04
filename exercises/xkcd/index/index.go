@@ -18,7 +18,7 @@ type Index interface {
 }
 
 func Fill(index Index) {
-	log.Println("Fetching last comic")
+	log.Println("Fetching last item")
 	firstComic := client.FetchLast()
 	err := index.AddComic(firstComic)
 	if err != nil {
@@ -26,7 +26,7 @@ func Fill(index Index) {
 	}
 
 	for i := 1; i < firstComic.Num; i++ {
-		log.Println("Fetching comic num: " + strconv.Itoa(i))
+		log.Println("Fetching item num: " + strconv.Itoa(i))
 		err = index.AddComic(client.FetchOne(i))
 		if err != nil {
 			log.Fatal(err)
@@ -35,7 +35,7 @@ func Fill(index Index) {
 }
 
 func BulkFill(index Index, bulkSize int) int {
-	log.Println("Fetching last comic")
+	log.Println("Fetching last item")
 	firstComic := client.FetchLast()
 	err := index.AddComic(firstComic)
 	if err != nil {
@@ -44,7 +44,7 @@ func BulkFill(index Index, bulkSize int) int {
 
 	failed := 0
 	for i := 1; i < firstComic.Num; i += bulkSize {
-		log.Println(fmt.Sprintf("Fetching next comics bulk, first index: %d", i))
+		log.Println(fmt.Sprintf("Fetching next comics bulk, first comic_index: %d", i))
 		nums := make([]int, 0, bulkSize)
 		for j := i; j < i+bulkSize && j < firstComic.Num; j++ {
 			nums = append(nums, j)

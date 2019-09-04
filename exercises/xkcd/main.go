@@ -1,17 +1,33 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"xkcd/index"
 	"xkcd/index/JSON"
+	"xkcd/search/comic_index"
 )
+
+func CreateSearchIndexFromOfflineIndex(index index.Index) {
+	comics := index.BulkRetrieveComic([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) // todo: change on retrieve on from comic_index
+	comic_index.New(comics)
+}
 
 func main() {
 	jsonIndex := &JSON.Index{Name: "test"}
-	_ = jsonIndex.Drop()
-	_ = jsonIndex.Create()
-	failed := index.BulkFill(jsonIndex, 100)
-	log.Println(fmt.Sprintf("Finish filling index, failed items: %d", failed))
+
+	comics := jsonIndex.BulkRetrieveComic([]int{1, 2, 3})
+	for _, comic := range comics {
+		data, _ := json.Marshal(comic)
+		log.Println(string(data))
+	}
+
+	CreateSearchIndexFromOfflineIndex(jsonIndex)
+
 	//_ = jsonIndex.Drop()
+	//_ = jsonIndex.Create()
+	//failed := comic_index.BulkFill(jsonIndex, 100)
+	//log.Println(fmt.Sprintf("Finish filling comic_index, failed items: %d", failed))
+	//_ = jsonIndex.Drop()
+
 }

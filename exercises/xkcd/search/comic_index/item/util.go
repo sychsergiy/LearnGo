@@ -1,11 +1,9 @@
-package index_item
+package item
 
 import (
 	"log"
 	"regexp"
-	"sort"
 	"strings"
-	"xkcd/comic"
 )
 
 func contains(slice []string, item string) bool {
@@ -35,20 +33,4 @@ func getKeyWords(text string, wordsToExclude []string) []string {
 		}
 	}
 	return filteredWords
-}
-
-type Comic struct {
-	TitleKeyWords      []string
-	TranscriptKeyWords []string
-	Num                int
-}
-
-func CreateComic(c comic.Comic) *Comic {
-	//todo: remove empty strings
-	excluded := []string{"a", "the", "an"}
-	titleKeyWords := getKeyWords(c.Title, excluded)
-	transcriptKeyWords := getKeyWords(c.Transcript, excluded)
-	sort.Strings(titleKeyWords)
-	sort.Strings(transcriptKeyWords)
-	return &Comic{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: c.Num}
 }
