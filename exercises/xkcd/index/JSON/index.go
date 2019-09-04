@@ -7,6 +7,8 @@ import (
 	"log"
 	"os"
 	"path"
+	"strconv"
+	"strings"
 	"xkcd/comic"
 )
 
@@ -76,6 +78,7 @@ func (index *Index) RetrieveComic(num int) *comic.Comic {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	return c
 
 }
@@ -86,4 +89,39 @@ func (index *Index) BulkRetrieveComic(nums []int) []comic.Comic {
 		comics = append(comics, *index.RetrieveComic(num))
 	}
 	return comics
+}
+
+func (index *Index) RetrieveAllComics() []comic.Comic {
+	nums := index.getAllComicsNums()
+	//todo: add iterator
+	return index.BulkRetrieveComic(nums)
+}
+
+func (index *Index) getAllComicsNums() []int {
+	filesNames := getDirFiles(index.getDirName())
+
+	nums := make([]int, 0, len(filesNames))
+	for _, filename := range filesNames {
+		chunks := strings.Split(filename, ".")
+		num, err := strconv.Atoi(chunks[0])
+		if err != nil {
+			log.Fatal(err)
+		}
+		nums = append(nums, num)
+	}
+	return nums
+}
+
+func getDirFiles(dirPath string) []string {
+	files, err := ioutil.ReadDir(dirPath)
+
+	filesNames := make([]string, 0, len(files))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+		filesNames = append(filesNames, f.Name())
+	}
+	return filesNames
 }

@@ -15,6 +15,7 @@ type Index interface {
 	BulkAddComic(comics []comic.Comic) int
 	RetrieveComic(num int) *comic.Comic
 	BulkRetrieveComic(nums []int) []comic.Comic
+	RetrieveAllComics() []comic.Comic
 }
 
 func Fill(index Index) {

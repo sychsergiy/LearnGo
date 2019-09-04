@@ -9,7 +9,7 @@ import (
 )
 
 func CreateSearchIndexFromOfflineIndex(index index.Index) {
-	comics := index.BulkRetrieveComic([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}) // todo: change on retrieve on from comic_index
+	comics := index.RetrieveAllComics()
 	comic_index.New(comics)
 }
 

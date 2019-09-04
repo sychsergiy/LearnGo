@@ -28,7 +28,7 @@ func getKeyWords(text string, wordsToExclude []string) []string {
 	words := strings.Split(cleanPunctuation(text), " ")
 	filteredWords := make([]string, 0, len(words))
 	for _, word := range words {
-		if !contains(wordsToExclude, word) {
+		if !contains(wordsToExclude, word) && word != "" {
 			filteredWords = append(filteredWords, word)
 		}
 	}
