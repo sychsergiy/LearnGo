@@ -20,11 +20,4 @@ func CreateSearchIndexFromOfflineIndex(index index.Index) {
 func main() {
 	jsonIndex := &JSON.Index{Name: "test"}
 	CreateSearchIndexFromOfflineIndex(jsonIndex)
-
-	//_ = jsonIndex.Drop()
-	//_ = jsonIndex.Create()
-	//failed := comic_index.BulkFill(jsonIndex, 100)
-	//log.Println(fmt.Sprintf("Finish filling comic_index, failed items: %d", failed))
-	//_ = jsonIndex.Drop()
-
 }

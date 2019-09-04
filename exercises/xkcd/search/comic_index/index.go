@@ -72,6 +72,7 @@ func (index *ComicIndex) Write(comics []comic.Comic) {
 }
 
 func (index *ComicIndex) writeEmpty() {
+	_ = os.Remove(index.getSourceFilePath())
 	file, err := os.OpenFile(index.getSourceFilePath(), os.O_WRONLY|os.O_CREATE, 0660)
 	if err != nil {
 		log.Fatal(err)
@@ -87,6 +88,7 @@ func (index *ComicIndex) writeEmpty() {
 }
 
 func (index *ComicIndex) write(comicIndexItems []item.Comic) {
+	_ = os.Remove(index.getSourceFilePath())
 	file, err := os.OpenFile(index.getSourceFilePath(), os.O_WRONLY|os.O_CREATE, 0660)
 	if err != nil {
 		log.Fatal(err)
