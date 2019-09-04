@@ -12,7 +12,8 @@ func CreateSearchIndex(comics []comic.Comic) {
 		comicIndexItems = append(comicIndexItems, *CreateComicIndexItem(comic_))
 	}
 
-	WriteComicIndex(comicIndexItems)
+	comicIndex := ComicIndex{}
+	comicIndex.Write(comicIndexItems)
 }
 
 func CreateSearchIndexFromOfflineIndex(index index.Index) {

@@ -1,10 +1,7 @@
 package search
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"log"
-	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -40,12 +37,6 @@ func getKeyWords(text string, wordsToExclude []string) []string {
 	return filteredWords
 }
 
-type ComicIndexItem struct {
-	TitleKeyWords      []string
-	TranscriptKeyWords []string
-	Num                int
-}
-
 func CreateComicIndexItem(comic comic.Comic) *ComicIndexItem {
 	//todo: remove empty strings
 	excluded := []string{"a", "the", "an"}
@@ -56,32 +47,8 @@ func CreateComicIndexItem(comic comic.Comic) *ComicIndexItem {
 	return &ComicIndexItem{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: comic.Num}
 }
 
-func ReadComicIndex() []ComicIndexItem {
-	file, err := os.OpenFile("search_index.json", os.O_RDWR|os.O_CREATE, 0660)
-	if err != nil {
-		log.Fatal(err)
-	}
-	content, err := ioutil.ReadAll(file)
-	indexItems := make([]ComicIndexItem, 0, 0)
-	err = json.Unmarshal(content, &indexItems)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return indexItems
-}
-
-func WriteComicIndex(comicIndexItems []ComicIndexItem) {
-	file, err := os.OpenFile("search_index.json", os.O_WRONLY|os.O_CREATE, 0660)
-	if err != nil {
-		log.Fatal(err)
-	}
-	jsonData, err := json.Marshal(comicIndexItems)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, err = file.Write(jsonData)
-	if err != nil {
-		log.Fatal(err)
-	}
+type ComicIndexItem struct {
+	TitleKeyWords      []string
+	TranscriptKeyWords []string
+	Num                int
 }
