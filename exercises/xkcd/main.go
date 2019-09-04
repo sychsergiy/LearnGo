@@ -1,27 +1,22 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
+	"xkcd/comic"
 	"xkcd/index"
 	"xkcd/index/JSON"
 	"xkcd/search/comic_index"
 )
 
 func CreateSearchIndexFromOfflineIndex(index index.Index) {
-	comics := index.RetrieveAllComics()
+	var comicsChunk, comics []comic.Comic
+	for iterator, hasNext := index.AllComicsIterator(10); hasNext; comicsChunk, hasNext = iterator() {
+		comics = append(comics, comicsChunk...)
+	}
 	comic_index.New(comics)
 }
 
 func main() {
 	jsonIndex := &JSON.Index{Name: "test"}
-
-	comics := jsonIndex.BulkRetrieveComic([]int{1, 2, 3})
-	for _, comic := range comics {
-		data, _ := json.Marshal(comic)
-		log.Println(string(data))
-	}
-
 	CreateSearchIndexFromOfflineIndex(jsonIndex)
 
 	//_ = jsonIndex.Drop()

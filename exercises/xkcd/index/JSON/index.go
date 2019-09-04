@@ -93,8 +93,23 @@ func (index *Index) BulkRetrieveComic(nums []int) []comic.Comic {
 
 func (index *Index) RetrieveAllComics() []comic.Comic {
 	nums := index.getAllComicsNums()
-	//todo: add iterator
 	return index.BulkRetrieveComic(nums)
+}
+
+func (index *Index) AllComicsIterator(chunkSize int) (func() ([]comic.Comic, bool), bool) {
+	nums := index.getAllComicsNums()
+	var chunkEnd, chunkStart int
+	totalLen := len(nums)
+
+	return func() ([]comic.Comic, bool) {
+		chunkEnd = chunkStart + chunkSize
+		if chunkEnd > totalLen {
+			chunkEnd = totalLen
+		}
+		comics := index.BulkRetrieveComic(nums[chunkStart:chunkEnd])
+		chunkStart = chunkEnd
+		return comics, chunkEnd < totalLen
+	}, chunkEnd < totalLen
 }
 
 func (index *Index) getAllComicsNums() []int {

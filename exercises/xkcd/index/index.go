@@ -16,6 +16,7 @@ type Index interface {
 	RetrieveComic(num int) *comic.Comic
 	BulkRetrieveComic(nums []int) []comic.Comic
 	RetrieveAllComics() []comic.Comic
+	AllComicsIterator(chunkSize int) (func() ([]comic.Comic, bool), bool)
 }
 
 func Fill(index Index) {
