@@ -8,11 +8,13 @@ import (
 )
 
 func CreateSearchIndexFromOfflineIndex(index index.Index) {
+	searchIndex := comic_index.NewEmpty()
+
 	var comicsChunk, comics []comic.Comic
 	for iterator, hasNext := index.AllComicsIterator(10); hasNext; comicsChunk, hasNext = iterator() {
 		comics = append(comics, comicsChunk...)
+		searchIndex.Append(comics)
 	}
-	comic_index.New(comics)
 }
 
 func main() {
