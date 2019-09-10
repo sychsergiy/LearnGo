@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
 	"xkcd/comic"
 	"xkcd/index"
-	"xkcd/index/JSON"
+	"xkcd/search"
 	"xkcd/search/comic_index"
 )
 
@@ -18,6 +19,10 @@ func CreateSearchIndexFromOfflineIndex(index index.Index) {
 }
 
 func main() {
-	jsonIndex := &JSON.Index{Name: "test"}
-	CreateSearchIndexFromOfflineIndex(jsonIndex)
+	//jsonIndex := &JSON.Index{Name: "test"}
+	searchIndex := comic_index.ComicIndex{}
+	//CreateSearchIndexFromOfflineIndex(jsonIndex)
+	nums := search.Search(searchIndex, "alt")
+
+	log.Println(nums)
 }
