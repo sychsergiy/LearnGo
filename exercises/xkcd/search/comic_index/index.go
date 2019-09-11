@@ -88,7 +88,10 @@ func (index *ComicIndex) writeEmpty() {
 }
 
 func (index *ComicIndex) write(comicIndexItems []item.Comic) {
-	_ = os.Remove(index.getSourceFilePath())
+	err := os.Remove(index.getSourceFilePath())
+	if err != nil {
+		log.Fatal(err)
+	}
 	file, err := os.OpenFile(index.getSourceFilePath(), os.O_WRONLY|os.O_CREATE, 0660)
 	if err != nil {
 		log.Fatal(err)

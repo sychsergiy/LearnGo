@@ -9,24 +9,24 @@ import (
 )
 
 func CreateSearchIndexFromOfflineIndex() {
+	var comicsChunk []comic.Comic
+
 	jsonIndex := &JSON.Index{Name: "test"}
 	searchIndex := comic_index.NewEmpty()
 
-	var comicsChunk, comics []comic.Comic
 	for iterator, hasNext := jsonIndex.AllComicsIterator(10); hasNext; comicsChunk, hasNext = iterator() {
-		comics = append(comics, comicsChunk...)
-		searchIndex.Append(comics)
+		searchIndex.Append(comicsChunk)
 	}
 }
 
 func Search() {
 	searchIndex := comic_index.ComicIndex{}
-	nums := search.Search(searchIndex, "back")
+	nums := search.Search(searchIndex, "alt")
 	log.Println(nums)
 
 }
 
 func main() {
-	//Search()
-	CreateSearchIndexFromOfflineIndex()
+	Search()
+	//CreateSearchIndexFromOfflineIndex()
 }
