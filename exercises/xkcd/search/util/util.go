@@ -1,4 +1,4 @@
-package item
+package util
 
 import (
 	"log"
@@ -23,7 +23,7 @@ func cleanPunctuation(text string) string {
 	return reg.ReplaceAllString(text, " ")
 }
 
-func getKeyWords(text string, wordsToExclude []string) []string {
+func GetKeyWords(text string, wordsToExclude []string) []string {
 	text = strings.ToLower(text)
 	words := strings.Split(cleanPunctuation(text), " ")
 	filteredWords := make([]string, 0, len(words))
@@ -32,5 +32,16 @@ func getKeyWords(text string, wordsToExclude []string) []string {
 			filteredWords = append(filteredWords, word)
 		}
 	}
-	return filteredWords
+
+	wordsSet := make(map[string]bool)
+	for _, word := range filteredWords {
+		wordsSet[word] = true
+	}
+
+	uniqueWords := make([]string, 0, len(wordsSet))
+	for word := range wordsSet {
+		uniqueWords = append(uniqueWords, word)
+	}
+
+	return uniqueWords
 }

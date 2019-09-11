@@ -3,6 +3,7 @@ package item
 import (
 	"sort"
 	"xkcd/comic"
+	"xkcd/search/util"
 )
 
 type Comic struct {
@@ -14,8 +15,8 @@ type Comic struct {
 func New(c comic.Comic) *Comic {
 	//todo: remove empty strings
 	excluded := []string{"a", "the", "an"}
-	titleKeyWords := getKeyWords(c.Title, excluded)
-	transcriptKeyWords := getKeyWords(c.Transcript, excluded)
+	titleKeyWords := util.GetKeyWords(c.Title, excluded)
+	transcriptKeyWords := util.GetKeyWords(c.Transcript, excluded)
 	sort.Strings(titleKeyWords)
 	sort.Strings(transcriptKeyWords)
 	return &Comic{TitleKeyWords: titleKeyWords, TranscriptKeyWords: transcriptKeyWords, Num: c.Num}

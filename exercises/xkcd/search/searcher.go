@@ -17,17 +17,20 @@ func Search(index comic_index.ComicIndex, query string) []int {
 	var searchItems []searchItem
 	items := index.ReadAll()
 
+
 	for _, item := range items {
 
 		for _, titleKeyWord := range item.TitleKeyWords {
 			if strings.Contains(titleKeyWord, query) {
 				searchItems = append(searchItems, searchItem{item.Num, 100, "title"})
+				break
 			}
 		}
 
 		for _, transcriptKeyWord := range item.TranscriptKeyWords {
 			if strings.Contains(transcriptKeyWord, query) {
 				searchItems = append(searchItems, searchItem{item.Num, 100, "description"})
+				break
 			}
 		}
 	}
@@ -46,14 +49,9 @@ func Search(index comic_index.ComicIndex, query string) []int {
 		return searchItems[i].MatchPercent < searchItems[j].MatchPercent
 	})
 
-	numsSet := make(map[int]bool)
-	for _, searchItem := range searchItems {
-		numsSet[searchItem.Num] = true
-	}
-
 	nums := make([]int, 0, len(searchItems))
-	for key, _ := range numsSet {
-		nums = append(nums, key)
+	for _, searchItem := range searchItems {
+		nums = append(nums, searchItem.Num)
 	}
 	return nums
 }
