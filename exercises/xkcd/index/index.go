@@ -9,8 +9,8 @@ import (
 )
 
 type Index interface {
-	Create() error
-	Drop() error
+	Create()
+	Drop()
 	AddComic(comic *comic.Comic) error
 	BulkAddComic(comics []comic.Comic) int
 	RetrieveComic(num int) *comic.Comic

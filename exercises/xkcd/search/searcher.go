@@ -51,7 +51,7 @@ func Search(index comic_index.ComicIndex, query string) []int {
 		return titleMatchedItems[i].MatchPercent < titleMatchedItems[j].MatchPercent
 	})
 	sort.Slice(descriptionMatchedItems, func(i, j int) bool {
-		return descriptionMatchedItems[i].MatchPercent < descriptionMatchedItems[j].MatchPercent
+		return descriptionMatchedItems[i].MatchPercent > descriptionMatchedItems[j].MatchPercent
 	})
 
 	nums := make([]int, 0, len(titleMatchedItems)+len(descriptionMatchedItems))

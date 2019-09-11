@@ -22,22 +22,18 @@ func (index *Index) getDirName() string {
 	return indexDirPrefix + "_" + index.Name
 }
 
-func (index *Index) Create() error {
+func (index *Index) Create() {
 	err := os.Mkdir(index.getDirName(), 0700)
 	if err != nil {
 		log.Fatal(err)
-		return err
 	}
-	return nil
 }
 
-func (index *Index) Drop() error {
+func (index *Index) Drop() {
 	err := os.RemoveAll(index.getDirName())
 	if err != nil {
 		log.Fatal(err)
-		return err
 	}
-	return nil
 }
 
 func (index *Index) AddComic(comic *comic.Comic) error {
