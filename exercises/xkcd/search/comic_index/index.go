@@ -40,10 +40,8 @@ func New(comics []comic.Comic) ComicIndex {
 	return comicIndex
 }
 
-func NewEmpty() ComicIndex {
-	ins := ComicIndex{}
-	ins.writeEmpty()
-	return ins
+func (index *ComicIndex) Create() {
+	index.writeEmpty()
 }
 
 func (index *ComicIndex) Drop() {
