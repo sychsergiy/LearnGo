@@ -20,6 +20,16 @@ func (s *IntSet) Copy() *IntSet {
 	return newS
 }
 
+func (s *IntSet) AddAll(items ...int) int {
+	var count = 0
+	for _, y := range items {
+		if s.Add(y) {
+			count += 1
+		}
+	}
+	return count
+}
+
 // Has reports whether the set contains the non-negative value x.
 func (s *IntSet) Has(x int) bool {
 	word, bit := x/64, uint(x%64)
@@ -57,12 +67,17 @@ func (s *IntSet) Len() int {
 }
 
 // Add adds the non-negative value x to the set.
-func (s *IntSet) Add(x int) {
+func (s *IntSet) Add(x int) bool {
 	word, bit := x/64, uint(x%64)
 	for word >= len(s.words) {
 		s.words = append(s.words, 0)
 	}
+	previous := s.words[word]
 	s.words[word] |= 1 << bit
+	if previous != s.words[word] {
+		return true
+	}
+	return false
 }
 
 // UnionWith sets s to the union of s and t.

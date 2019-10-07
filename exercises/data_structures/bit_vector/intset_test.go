@@ -59,3 +59,28 @@ func TestIntSet_Copy(t *testing.T) {
 	assert.False(t, &set == &setCopy)
 	assert.Equal(t, set.words, setCopy.words)
 }
+
+func TestIntSet_AddAll(t *testing.T) {
+	set := &IntSet{}
+	assert.Equal(t, 3, set.AddAll(1, 2, 3))
+	assert.Equal(t, set.words, []uint64{14})
+}
+
+func TestIntSet_AddAll_Intersection(t *testing.T) {
+	twoIn64 := uint64(math.Pow(float64(2), float64(64)))
+	set := &IntSet{[]uint64{2}} // {1}
+	assert.Equal(t, set.AddAll(1, 127), 1)
+	assert.Equal(t, set.words, []uint64{2, twoIn64})
+}
+
+func TestIntSet_Add_New(t *testing.T) {
+	set := IntSet{}
+	assert.True(t, set.Add(1))
+	assert.Equal(t, []uint64{2}, set.words)
+}
+
+func TestIntSet_Add_Old(t *testing.T) {
+	set := IntSet{[]uint64{2}}
+	assert.False(t, set.Add(1))
+	assert.Equal(t, []uint64{2}, set.words)
+}
