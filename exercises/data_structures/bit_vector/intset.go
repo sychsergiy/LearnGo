@@ -9,6 +9,10 @@ type IntSet struct {
 	words []uint64
 }
 
+func (s *IntSet) Clear() {
+	s.words = []uint64{}
+}
+
 // Has reports whether the set contains the non-negative value x.
 func (s *IntSet) Has(x int) bool {
 	word, bit := x/64, uint(x%64)

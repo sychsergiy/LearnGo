@@ -44,3 +44,9 @@ func TestIntSet_Remove_ExistentElementInSecondWord(t *testing.T) {
 	assert.Equal(t, set.Remove(126), true)
 	assert.Equal(t, []uint64{0, twoIn64}, set.words)
 }
+
+func TestIntSet_Clear(t *testing.T) {
+	set := IntSet{[]uint64{3}} // {0,1}
+	set.Clear()
+	assert.Equal(t, set.words, []uint64{})
+}
