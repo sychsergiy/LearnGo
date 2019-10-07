@@ -13,6 +13,13 @@ func (s *IntSet) Clear() {
 	s.words = []uint64{}
 }
 
+func (s *IntSet) Copy() *IntSet {
+	var wordsCopy = make([]uint64, len(s.words), len(s.words))
+	copy(wordsCopy, s.words)
+	newS := &IntSet{wordsCopy}
+	return newS
+}
+
 // Has reports whether the set contains the non-negative value x.
 func (s *IntSet) Has(x int) bool {
 	word, bit := x/64, uint(x%64)
