@@ -15,6 +15,21 @@ func (s *IntSet) Has(x int) bool {
 	return word < len(s.words) && s.words[word]&(1<<bit) != 0
 }
 
+func (s *IntSet) Len() int {
+	var count int
+	for _, word := range s.words {
+		if word == 0 {
+			continue
+		}
+		for j := 0; j < 64; j++ {
+			if word&(1<<uint(j)) != 0 {
+				count += 1
+			}
+		}
+	}
+	return count
+}
+
 // Add adds the non-negative value x to the set.
 func (s *IntSet) Add(x int) {
 	word, bit := x/64, uint(x%64)
@@ -30,7 +45,7 @@ func (s *IntSet) UnionWith(t *IntSet) {
 		if i < len(s.words) {
 			s.words[i] |= tword
 		} else {
-				s.words = append(s.words, tword)
+			s.words = append(s.words, tword)
 		}
 	}
 }
@@ -55,4 +70,3 @@ func (s *IntSet) String() string {
 	buf.WriteByte('}')
 	return buf.String()
 }
-
