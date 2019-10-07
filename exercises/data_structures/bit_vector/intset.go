@@ -15,6 +15,21 @@ func (s *IntSet) Has(x int) bool {
 	return word < len(s.words) && s.words[word]&(1<<bit) != 0
 }
 
+func (s *IntSet) Remove(x int) bool {
+	word, bit := x/64, uint(x%64)
+
+	if word < len(s.words) {
+		if s.words[word]&(1<<bit) == 0 {
+			return false
+		} else {
+			s.words[word] ^= 1 << bit
+			return true
+		}
+	} else {
+		return false
+	}
+}
+
 func (s *IntSet) Len() int {
 	var count int
 	for _, word := range s.words {
