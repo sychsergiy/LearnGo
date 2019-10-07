@@ -3,6 +3,7 @@ package bit_vector
 import (
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 type IntSet struct {
@@ -14,10 +15,26 @@ func (s *IntSet) Clear() {
 }
 
 func (s *IntSet) Copy() *IntSet {
-	var wordsCopy = make([]uint64, len(s.words), len(s.words))
+	var wordsCopy = make([]uint64, len(s.words))
 	copy(wordsCopy, s.words)
 	newS := &IntSet{wordsCopy}
 	return newS
+}
+
+func (s *IntSet) Elems() []int {
+	var items []int
+
+	for i, word := range s.words {
+		if word == 0 {
+			continue
+		}
+		for j := 0; j < 64; j++ {
+			if word&(1<<j) != 0 {
+				items = append(items, 64*i+j)
+			}
+		}
+	}
+	return items
 }
 
 func (s *IntSet) AddAll(items ...int) int {
@@ -95,19 +112,7 @@ func (s *IntSet) UnionWith(t *IntSet) {
 func (s *IntSet) String() string {
 	var buf bytes.Buffer
 	buf.WriteByte('{')
-	for i, word := range s.words {
-		if word == 0 {
-			continue
-		}
-		for j := 0; j < 64; j++ {
-			if word&(1<<uint(j)) != 0 {
-				if buf.Len() > len("{") {
-					buf.WriteByte(' ')
-				}
-				fmt.Fprintf(&buf, "%d", 64*i+j)
-			}
-		}
-	}
+	buf.WriteString(strings.Trim(strings.Replace(fmt.Sprint(s.Elems()), " ", ", ", -1), "[]"))
 	buf.WriteByte('}')
 	return buf.String()
 }

@@ -84,3 +84,13 @@ func TestIntSet_Add_Old(t *testing.T) {
 	assert.False(t, set.Add(1))
 	assert.Equal(t, []uint64{2}, set.words)
 }
+
+func TestIntSet_Elems(t *testing.T) {
+	set := IntSet{[]uint64{3, 0, 1}}
+	assert.Equal(t, []int{0, 1, 128}, set.Elems())
+}
+
+func TestIntSet_String(t *testing.T) {
+	set := IntSet{[]uint64{3, 0, 1}}
+	assert.Equal(t, "{0, 1, 128}", set.String())
+}
