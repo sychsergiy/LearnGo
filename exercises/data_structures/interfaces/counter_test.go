@@ -1,6 +1,7 @@
 package interfaces
 
 import (
+	"bytes"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -20,4 +21,13 @@ func TestLinesCounter_Write(t *testing.T) {
 	assert.Equal(t, LinesCounter(2), counter)
 	assert.Equal(t, integer, 2)
 	assert.Nil(t, err)
+}
+
+func TestCountingWriter(t *testing.T) {
+	var buf bytes.Buffer
+	writer, count := CountingWriter(&buf)
+	n, err := writer.Write([]byte("12345"))
+	assert.Equal(t, 5, n)
+	assert.Nil(t, err)
+	assert.Equal(t, int64(5), *count)
 }

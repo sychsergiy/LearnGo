@@ -2,6 +2,7 @@ package interfaces
 
 import (
 	"bufio"
+	"io"
 	"strings"
 )
 
@@ -29,4 +30,20 @@ func (lc *LinesCounter) Write(p []byte) (int, error) {
 	}
 	*lc += LinesCounter(c)
 	return c, nil
+}
+
+type BytesCounter struct {
+	writer  io.Writer
+	counter int64
+}
+
+func (bc *BytesCounter) Write(p []byte) (int, error) {
+	n, err := bc.writer.Write(p)
+	bc.counter += int64(n)
+	return n, err
+}
+
+func CountingWriter(w io.Writer) (io.Writer, *int64) {
+	bc := BytesCounter{w, 0}
+	return &bc, &bc.counter
 }
