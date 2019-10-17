@@ -1,4 +1,4 @@
-package data_structures
+package gopl
 
 import (
 	"github.com/stretchr/testify/assert"
