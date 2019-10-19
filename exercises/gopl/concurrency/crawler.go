@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"overview/exercises/gopl/concurrency/links"
+	"strconv"
 )
 
 func crawl(url string) []string {
@@ -16,20 +17,38 @@ func crawl(url string) []string {
 	return list
 }
 
-//!+
+type searchLink struct {
+	link  string
+	depth int
+}
+
 func main() {
-	worklist := make(chan []string)  // lists of URLs, may have duplicates
-	unseenLinks := make(chan string) // de-duplicated URLs
+	worklist := make(chan []searchLink)  // lists of URLs, may have duplicates
+	unseenLinks := make(chan searchLink) // de-duplicated URLs
 
 	// Add command-line arguments to worklist.
-	go func() { worklist <- os.Args[1:] }()
+	firstLink := searchLink{os.Args[1], 1}
+	go func() { worklist <- []searchLink{firstLink} }()
+
+	maxDepth, err := strconv.Atoi(os.Args[2])
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Create 20 crawler goroutines to fetch each unseen link.
 	for i := 0; i < 20; i++ {
 		go func() {
-			for link := range unseenLinks {
-				foundLinks := crawl(link)
-				go func() { worklist <- foundLinks }()
+			for item := range unseenLinks {
+				foundLinks := crawl(item.link)
+
+				if !(item.depth > maxDepth) {
+					searchItems := make([]searchLink, len(foundLinks))
+					for _, link := range foundLinks {
+						searchItems = append(searchItems, searchLink{link, item.depth + 1})
+					}
+					go func() { worklist <- searchItems }()
+				}
+
 			}
 		}()
 	}
@@ -38,10 +57,10 @@ func main() {
 	// and sends the unseen ones to the crawlers.
 	seen := make(map[string]bool)
 	for list := range worklist {
-		for _, link := range list {
-			if !seen[link] {
-				seen[link] = true
-				unseenLinks <- link
+		for _, searchItem := range list {
+			if !seen[searchItem.link] {
+				seen[searchItem.link] = true
+				unseenLinks <- searchItem
 			}
 		}
 	}
